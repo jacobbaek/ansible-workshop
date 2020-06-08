@@ -1,0 +1,15 @@
+---
+- name: deploy multi packages
+  hosts:
+  become: yes
+  vars:
+     http_port: 80
+
+  tasks:
+  - name: install web server packages
+    yum: 
+      name: {{ item }}
+      state: latest
+    loop:
+      - epel-release
+      - httpd
