@@ -1,0 +1,2 @@
+terraform-kvm-instances/*.tfstate*
+terraform-kvm-instances/.terraform/

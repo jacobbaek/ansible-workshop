@@ -1,6 +1,6 @@
 ---
 - name: deploy multi packages
-  hosts:
+  hosts: group1
   become: yes
   vars:
      http_port: 80
@@ -8,8 +8,33 @@
   tasks:
   - name: install web server packages
     yum: 
-      name: {{ item }}
+      name: "{{ item }}"
       state: latest
     loop:
       - epel-release
       - httpd
+
+  - name: start service
+    systemd:
+      name: httpd
+      state: started
+
+- name: check the service working
+  hosts: group2
+  become: yes
+  vars:
+    http_port: 80
+
+  tasks:
+  - name: get the ip addresss
+    debug: 
+      msg: "{{ hostvars['testvm1'].ansible_host }}"
+
+  - name: checking the service healthcheck
+    uri:
+      url: http://{{ item }}
+      status_code: 403
+    loop:
+      - "{{ hostvars['testvm1'].ansible_host }}"
+      - "{{ hostvars['testvm2'].ansible_host }}"
+
