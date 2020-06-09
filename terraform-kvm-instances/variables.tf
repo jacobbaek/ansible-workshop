@@ -15,5 +15,8 @@ variable "vm_count" {
 }
 
 variable "ssh-pubkey" {
-  default = "~/.ssh/id_rsa.pub"
+  ## FIXME
+  default = "ssh-rsa ..."
 }
+
+
