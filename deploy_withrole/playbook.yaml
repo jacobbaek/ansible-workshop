@@ -1,0 +1,5 @@
+---
+- hosts: group2
+  become: yes
+  roles:
+    - mariadb

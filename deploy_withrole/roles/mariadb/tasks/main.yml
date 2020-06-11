@@ -1,0 +1,65 @@
+---
+# tasks file for mysql
+
+- name: Add repository
+  yum_repository:
+    name: mariadb
+    description: MariaDB repository
+    file: external_repos
+    baseurl: http://yum.mariadb.org/10.4/centos7-amd64
+    gpgcheck: yes
+    gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+
+- name: install mysql package
+  yum:
+    name: "{{ item }}"
+    state: installed
+  loop:
+    - MariaDB-server
+    - MySQL-python
+    - libselinux-python
+    - libsemanage-python
+
+- name: Configure SELinux to start mysql on any port
+  seboolean:
+    name: "{{ item }}"
+    state: true
+    persistent: yes
+  loop:
+    - mysql_connect_any
+    - selinuxuser_mysql_connect_enabled
+
+- name: Create Mariadb configuration file
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf.d/my.cnf
+  notify:
+  - restart mariadb
+
+- name: Start Mariadb Service
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: Create Application Database
+  mysql_db:
+    name: "{{ dbname }}"
+    state: present
+
+- name: Create Application DB User
+  mysql_user:
+    name: "{{ dbuser }}"
+    password: "{{ dbpass }}"
+    priv: "*.*:ALL"
+    host: '%'
+    state: present
+
+- name: Create Application DB User
+  mysql_user:
+    name: "{{ dbuser }}"
+    password: "{{ dbpass }}"
+    priv: "*.*:ALL"
+    host: 'localhost'
+    state: present
+

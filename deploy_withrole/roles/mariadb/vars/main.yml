@@ -1,0 +1,6 @@
+---
+# vars file for mysql
+dbport: 33060
+dbname: ansible-workshop
+dbuser: workshop
+dbpass: password

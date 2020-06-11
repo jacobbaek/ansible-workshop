@@ -1,0 +1,11 @@
+---
+# handlers file for mysql
+- name: restart mariadb
+  service:
+    name: mariadb
+    state: restarted
+
+- name: restart iptables
+  service:
+    name: iptables
+    state: restarted
