@@ -38,3 +38,7 @@
       - "{{ hostvars['testvm1'].ansible_host }}"
       - "{{ hostvars['testvm2'].ansible_host }}"
 
+  - name: install mysql-client
+    yum:
+      name: mysql
+      state: latest
