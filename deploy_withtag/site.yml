@@ -1,0 +1,8 @@
+---
+- name: tag test playbook
+  hosts: all
+  roles:
+    - { role: step1, tags: tag1}
+    - { role: step2, tags: tag2}
+    - { role: step3 }
+    - { role: step4, tags: always}

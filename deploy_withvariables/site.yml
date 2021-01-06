@@ -1,0 +1,15 @@
+---
+- name: load global variables
+  hosts: all
+  tasks: 
+    - name: load global variables
+      include_vars: "{{ item }}"
+      loop: 
+        - "{{ playbook_dir }}/defaults/global.yml"
+      tags: ["tag1", "tag2"]
+
+- name: print variables
+  hosts: all
+  roles:
+    - { role: step1, tags: tag1}
+    - { role: step2, tags: tag2}

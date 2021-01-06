@@ -1,0 +1,8 @@
+---
+- name: print local variables in step1
+  debug: 
+    msg: "run step1 {{ local_var }} {{ local_default }}"
+
+- name: print global variables
+  debug: 
+    msg: "run step1 {{ global_default }}"

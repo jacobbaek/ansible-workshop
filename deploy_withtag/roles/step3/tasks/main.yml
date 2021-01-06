@@ -1,0 +1,4 @@
+---
+- name: print message for step3 task
+  debug: 
+    msg: "run step3"
