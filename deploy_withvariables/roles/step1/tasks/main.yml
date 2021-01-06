@@ -6,3 +6,7 @@
 - name: print global variables
   debug: 
     msg: "run step1 {{ global_default }}"
+
+- name: print global variables in group_vars
+  debug:
+    msg: "run step1 {{ global_variable }}"
