@@ -1,0 +1,5 @@
+---
+- name: tag test playbook
+  hosts: all
+  roles:
+    - step1

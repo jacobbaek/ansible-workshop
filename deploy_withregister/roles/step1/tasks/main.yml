@@ -1,0 +1,19 @@
+---
+- name: install tuned package
+  yum:
+    name: tuned
+    state: present
+  notify: start tuned
+
+- name: check the result of tuned-profile
+  shell: tuned-adm active | cut -f4 -d ' '
+  register: cur_profile
+
+- name: print the result of tuned-profile
+  debug: 
+    msg: "{{ cur_profile.stdout }}"
+
+- name: if it doesn't suitable specific profile, will apply the tuned profile
+  debug:
+    msg: "echo result {{ cur_profile.stdout}}"
+  when: cur_profile.stdout != "{{ compute_tuned_profile }}"
