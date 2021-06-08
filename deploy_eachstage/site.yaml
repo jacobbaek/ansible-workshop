@@ -1,0 +1,12 @@
+---
+- hosts: dev
+  become: yes
+  gather_facts: yes
+  roles:
+    - filebeat
+
+- hosts: prd
+  become: yes
+  gather_facts: yes
+  roles:
+    - filebeat

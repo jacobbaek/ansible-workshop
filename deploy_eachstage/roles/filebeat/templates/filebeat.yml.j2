@@ -1,0 +1,27 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+  - /var/log/audit/audit.log
+  tags: ["audit"]
+{% if "dev" in ansible_hostname %}
+- type: log
+  enabled: true
+  paths:
+  - /var/log/srv_dev/message.log
+{% endif %}
+{% if "prd" in ansible_hostname %}
+- type: log
+  enabled: true
+  paths:
+  - /var/log/srv_prd/message.log
+{% endif %}
+max_procs: 1
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+setup.template.settings:
+  index.number_of_shards: 1
+setup.kibana:
+output.logstash:
+  hosts: {{ logstash_addresses }}
