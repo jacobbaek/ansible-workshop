@@ -10,3 +10,8 @@
 - name: print global variables in group_vars
   debug:
     msg: "run step2 {{ global_variable }}"
+
+- name: print hostname
+  debug:
+    msg: "run step2 when hostname checked : {{ inventory_hostname }}"
+  when: inventory_hostname is search("de1")
